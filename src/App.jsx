@@ -10,7 +10,10 @@ function App() {
     return(
         <div className='flex App'>
 
+            
+
             <Sidebar />
+            
         <Routes>
             <Route path='/Dash' element= {<DashBoard />} />
             <Route path='/Exp' element= {<Expenses />} />
