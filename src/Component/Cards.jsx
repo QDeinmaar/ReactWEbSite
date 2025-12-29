@@ -32,33 +32,35 @@ const Cards = () => {
   const totalExpenses = expenses.reduce((sum, e) => sum + e.amount, 0);
 
   return (
-    <div className="flex flex-row items-start gap-6 flex-wrap">
+    <div>
+      <div className="flex flex-row items-start gap-6 flex-wrap mt-8 space-x-12">
+        <Card
+          title="Total Expenses"
+          value={`€${totalExpenses.toFixed(2)}`}
+          icon={<CurrencyEuroIcon className="flex w-6 h-6 text-gray-700" />}
+        />
 
-      <Card
-        title="Total Expenses"
-        value={`€${totalExpenses.toFixed(2)}`}
-        icon={<CurrencyEuroIcon className="flex w-6 h-6 text-gray-700" />}
-      />
+        <Card
+          title="Last Expense"
+          value={expenses.length > 0 ? `€${expenses[expenses.length - 1].amount}` : "€0.00"}
+          icon= {<BanknotesIcon className="flex w-6 h-6 text-gray-700" />}
+        />
 
-      <Card
-        title="Last Expense"
-        value={expenses.length > 0 ? `€${expenses[expenses.length - 1].amount}` : "€0.00"}
-        icon= {<BanknotesIcon className="flex w-6 h-6 text-gray-700" />}
-      />
+        <Card
+          title="Average Expense"
+          value={expenses.length > 0 ? `€${(totalExpenses / expenses.length).toFixed(2)}` : "€0.00"}
+          icon={<ChartBarIcon className="flex w-6 h-6 text-gray-700" />}
+        />
 
-      <Card
-        title="Average Expense"
-        value={expenses.length > 0 ? `€${(totalExpenses / expenses.length).toFixed(2)}` : "€0.00"}
-        icon={<ChartBarIcon className="flex w-6 h-6 text-gray-700" />}
-      />
-
-      <form onSubmit={newExpense} className="flex flex-col gap-3 mt-4 w-64">
+      </div>
+    <div className="grid place-items-center mt-10"> 
+      <form onSubmit={newExpense} className="flex flex-col gap-3  w-64">
         <input
           type="number"
           placeholder="Amount"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
-          className="border p-2 rounded w-full"
+          className="border rounded p-2 w-full"
           step="0.01"
         />
         <input
@@ -66,12 +68,12 @@ const Cards = () => {
           placeholder="Description (optional)"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className="border p-2 rounded w-full"
+          className="border rounded p-2 w-full"
         />
-        <div>
+        <div className="flex ml-10">
             <button
                 type="submit"
-                className="bg-green-600 text-white p-2 rounded hover:bg-green-700"
+                className="bg-gray-500 text-black font-bold p-2 rounded hover:bg-gray-600"
              >
                 Add Expense
             </button>
@@ -79,12 +81,13 @@ const Cards = () => {
             <button 
                     type="button"
                     onClick={Resetexpense}
-                    className="ml-4 bg-green-600 text-white p-2 rounded hover:bg-green-700"
+                    className="ml-4 bg-gray-500 text-black font-bold p-2 rounded hover:bg-gray-600"
                 >
                 Reset
             </button>
         </div>
       </form>
+  </div>  
     </div>
   );
 };

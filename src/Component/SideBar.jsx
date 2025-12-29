@@ -6,8 +6,8 @@ const Sidebar = () => {
 
     return (
 
-            <nav style={{backgroundColor : '#009F68'}} className="h-screen w-64 flex flex-col">
-                <h1 className="m-4 mb-8 text-white">Expenses Tracker</h1>
+            <nav style={{backgroundColor : '#406ABF'}} className="h-screen w-64 flex flex-col relative shadow-md">
+                <h1 className="m-4 mb-8 text-white text-2xl">Expenses Tracker</h1>
                 <div className="text-white flex flex-col items-start space-y-2 ml-4">
                     <Link to ='/Dash' className="flex hover:text-[#EFDFBB]"> <HomeIcon className="h-4 mr-2 mt-1"/> DashBoard</Link>
                     <Link to ='/Exp' className="flex hover:text-[#EFDFBB]"> <CurrencyEuroIcon className="h-4 mr-2 mt-1"/> Expenses</Link>
