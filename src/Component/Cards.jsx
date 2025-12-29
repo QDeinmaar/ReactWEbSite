@@ -1,95 +1,120 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "./Card";
-import { ChartBarIcon, CurrencyEuroIcon, BanknotesIcon } from "@heroicons/react/24/outline";
-
+import ExpenseChart from "./ExpenseChart";
+import {
+  CurrencyEuroIcon,
+  BanknotesIcon,
+  ChartBarIcon,
+} from "@heroicons/react/24/outline";
 
 const Cards = () => {
-  const [expenses, setExpenses] = useState([]);
+  // Load expenses from localStorage
+  const [expenses, setExpenses] = useState(() => {
+    return JSON.parse(localStorage.getItem("expenses")) || [];
+  });
+
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
 
-  const newExpense = (e) => {
+  // Save expenses whenever they change
+  useEffect(() => {
+    localStorage.setItem("expenses", JSON.stringify(expenses));
+  }, [expenses]);
+
+  const addExpense = (e) => {
     e.preventDefault();
     if (!amount) return;
 
-    const expense = {
+    const newExpense = {
+      id: Date.now(),
       amount: parseFloat(amount),
-      description: description
+      description,
     };
 
-    setExpenses([...expenses, expense]);
+    setExpenses([...expenses, newExpense]);
     setAmount("");
     setDescription("");
   };
 
-  const Resetexpense = () => {
-
+  const resetExpenses = () => {
     setExpenses([]);
-    setAmount(0);
-    setDescription("");
-  }
+    localStorage.removeItem("expenses");
+  };
 
-  const totalExpenses = expenses.reduce((sum, e) => sum + e.amount, 0);
+  const total = expenses.reduce((sum, e) => sum + e.amount, 0);
+  const average = expenses.length ? total / expenses.length : 0;
+  const last = expenses.length ? expenses[expenses.length - 1].amount : 0;
 
   return (
-    <div>
-      <div className="flex flex-row items-start gap-6 flex-wrap mt-8 space-x-12">
-        <Card
-          title="Total Expenses"
-          value={`€${totalExpenses.toFixed(2)}`}
-          icon={<CurrencyEuroIcon className="flex w-6 h-6 text-gray-700" />}
-        />
-
-        <Card
-          title="Last Expense"
-          value={expenses.length > 0 ? `€${expenses[expenses.length - 1].amount}` : "€0.00"}
-          icon= {<BanknotesIcon className="flex w-6 h-6 text-gray-700" />}
-        />
-
-        <Card
-          title="Average Expense"
-          value={expenses.length > 0 ? `€${(totalExpenses / expenses.length).toFixed(2)}` : "€0.00"}
-          icon={<ChartBarIcon className="flex w-6 h-6 text-gray-700" />}
-        />
-
-      </div>
-    <div className="grid place-items-center mt-10"> 
-      <form onSubmit={newExpense} className="flex flex-col gap-3  w-64">
-        <input
-          type="number"
-          placeholder="Amount"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          className="border rounded p-2 w-full"
-          step="0.01"
-        />
-        <input
-          type="text"
-          placeholder="Description (optional)"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className="border rounded p-2 w-full"
-        />
-        <div className="flex ml-10">
-            <button
-                type="submit"
-                className="bg-gray-500 text-black font-bold p-2 rounded hover:bg-gray-600"
-             >
-                Add Expense
-            </button>
-
-            <button 
-                    type="button"
-                    onClick={Resetexpense}
-                    className="ml-4 bg-gray-500 text-black font-bold p-2 rounded hover:bg-gray-600"
-                >
-                Reset
-            </button>
+    <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+      {/* LEFT SIDE */}
+      <div className="space-y-10">
+        {/* STATS CARDS */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Card
+            title="Total Expenses"
+            value={`€${total.toFixed(2)}`}
+            icon={<CurrencyEuroIcon />}
+          />
+          <Card
+            title="Last Expense"
+            value={`€${last.toFixed(2)}`}
+            icon={<BanknotesIcon />}
+          />
+          <Card
+            title="Average Expense"
+            value={`€${average.toFixed(2)}`}
+            icon={<ChartBarIcon />}
+          />
         </div>
-      </form>
-  </div>  
+
+        {/* ADD EXPENSE FORM */}
+        <div className="bg-white rounded-xl shadow-sm p-6 w-full max-w-sm">
+          <h2 className="text-lg font-semibold mb-4">Add Expense</h2>
+
+          <form onSubmit={addExpense} className="flex flex-col gap-3">
+            <input
+              type="number"
+              step="0.01"
+              placeholder="Amount (€)"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              className="border rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none"
+            />
+
+            <input
+              type="text"
+              placeholder="Description (optional)"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="border rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none"
+            />
+
+            <div className="flex gap-3 mt-2">
+              <button
+                type="submit"
+                className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
+              >
+                Add
+              </button>
+
+              <button
+                type="button"
+                onClick={resetExpenses}
+                className="flex-1 bg-gray-200 py-2 rounded-lg hover:bg-gray-300"
+              >
+                Reset
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      {/* RIGHT SIDE */}
+      <ExpenseChart expenses={expenses} />
     </div>
   );
 };
 
 export default Cards;
+
