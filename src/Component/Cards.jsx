@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Card from "./Card";
 import ExpenseChart from "./ExpenseChart";
-import {
-  CurrencyEuroIcon,
-  BanknotesIcon,
-  ChartBarIcon,
-} from "@heroicons/react/24/outline";
+import { CurrencyEuroIcon, BanknotesIcon, ChartBarIcon } from "@heroicons/react/24/outline";
 
 const Cards = () => {
   // Load expenses from localStorage
