@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { CurrencyEuroIcon, BanknotesIcon, ChartBarIcon } from "@heroicons/react/24/outline";
+import { CurrencyEuroIcon, BanknotesIcon } from "@heroicons/react/24/outline";
 
 
 export default function Stats() {
@@ -29,7 +29,7 @@ export default function Stats() {
         <div className="bg-white p-4 rounded shadow">
             <div className="flex items-center space-x-2">
                 <CurrencyEuroIcon  className="h-7 w-7 text-gray-500 flex-row"/>
-                <p className="font-bold text-gray-500">Total Expenses</p>
+                <p className="font-bold text-gray-500">Expenses Count</p>
             </div>
           <p className="text-2xl font-bold flex justify-center">{count}</p>
         </div>
