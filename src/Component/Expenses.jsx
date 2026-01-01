@@ -10,11 +10,11 @@ const Expenses = () => {
   }, []);
 
   return (
-    <main className="bg-gray-100 min-h-screen p-8">
-      <h1 className="text-3xl font-bold mb-6">Expenses</h1>
+    <main className="bg-gray-100 w-screen p-8">
+      <h1 className="text-3xl font-bold mb-6 justify-center flex">Expenses</h1>
 
       {expenses.length === 0 ? (
-        <p className="text-gray-500">No expenses recorded yet.</p>
+        <p className="text-gray-500 flex justify-center">No expenses recorded yet.</p>
       ) : (
         <div className="bg-white rounded-xl shadow-sm overflow-hidden">
           <table className="w-full">
