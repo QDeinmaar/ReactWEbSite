@@ -47,9 +47,9 @@ const Cards = () => {
 
   return (
     <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-      {/* LEFT SIDE */}
+
       <div className="space-y-10">
-        {/* STATS CARDS */}
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card
             title="Total Expenses"
@@ -68,7 +68,6 @@ const Cards = () => {
           />
         </div>
 
-        {/* ADD EXPENSE FORM */}
         <div className="bg-white rounded-xl shadow-sm p-6 w-full max-w-sm">
           <h2 className="text-lg font-semibold mb-4">Add Expense</h2>
 
@@ -110,7 +109,6 @@ const Cards = () => {
         </div>
       </div>
 
-      {/* RIGHT SIDE */}
       <ExpenseChart expenses={expenses} />
     </div>
   );
